@@ -15,6 +15,9 @@ namespace Zadanie_8
             // Program pyta użytkownika o liczbę elementów do wprowadzenia <1,10>,
             // weryfikuje wprowadzoną liczbę i wyprowadza posortowane elementy.
             // Dodatkowo obsługuje wyjątki.
+
+            string koniec;
+
             int[] sortowanie(int[] tablica)
             {
                 if (tablica.Length == 0 || tablica.Length > 10) throw new ArgumentException();
@@ -40,17 +43,30 @@ namespace Zadanie_8
             
             do
             {
+                Console.WriteLine("Program sortuje wprowadzone liczby od najmniejszej do największej.");
+                Console.WriteLine();
                 Console.Write("Wprowadź liczbę elementów do posortowania <1 .... 10>: ");
                 if (int.TryParse(Console.ReadLine(), out int rozmiar) && rozmiar >= 1 && rozmiar <= 10)
                 {
+                    Console.WriteLine();
+                    Console.WriteLine($"Podaj teraz {rozmiar} liczb, klikając po każdej 'enter'.");
+                    Console.WriteLine();
                     int[] tablica = new int[rozmiar];
                     for (int i = 0; i < rozmiar; i++)
                     {
-                        tablica[i] = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            tablica[i] = int.Parse(Console.ReadLine());
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Niepoprawny format.");
+                        }
                     }
                     try
                     {
                         int[] tablica_posortowana = sortowanie(tablica);
+                        Console.WriteLine();
                         Console.WriteLine("Tablica posortowana: ");
                         for (int i = 0; i < rozmiar; i++)
                         {
@@ -61,6 +77,7 @@ namespace Zadanie_8
                     {
                         Console.WriteLine("Rozmiar tablicy poza przedziałem <1, 10>.");
                     }
+                    Console.WriteLine();
                     Console.WriteLine("Tablica nieposortowana: ");
                     for (int i = 0; i < rozmiar; i++)
                     {
@@ -69,11 +86,15 @@ namespace Zadanie_8
                 }
                 else
                 {
-                    Console.WriteLine("Zła liczba spróbuj ponownie ...");
+                    Console.WriteLine("Niepoprawna wartość!");
+                    Console.WriteLine();
                 }
+                Console.WriteLine();
+                Console.WriteLine("Czy chcesz zakończyć działanie programu? tak - enter, nie - wpisz słowo 'nie'.");
+                koniec = Console.ReadLine();
 
             }
-            while (true);
+            while (koniec == "nie");
 
         }
     }
